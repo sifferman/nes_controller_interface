@@ -1,0 +1,82 @@
+CAPI=2:
+name: sifferman::nes_controller_interface:1.0.0
+description: NES Controller Interface
+
+filesets:
+  # default
+  rtl:
+    files:
+      - rtl/nes_controller_interface.v
+      - rtl/nes_controller.v
+    file_type: verilogSource
+  # simulation
+  sim:
+    files:
+      - sim/controller_interface_tb.v
+    file_type: verilogSource
+
+
+targets:
+  default: &default
+    filesets:
+      - rtl
+
+  sim: # fusesoc run --target sim sifferman::nes_controller_interface
+    <<: *default
+    description: Simulate the design
+    filesets_append:
+      - sim
+    toplevel: controller_interface_tb
+    default_tool: icarus
+    tools:
+      icarus:
+        iverilog_options:
+          - -g2005
+          - -Wall
+      verilator:
+        verilator_options:
+          - --binary
+          - -j 0
+          - --trace-fst
+          - --x-assign unique
+          - --x-initial unique
+          - -Wno-fatal
+        run_options:
+          - +verilator+rand+reset+2
+
+  lint: # fusesoc run --target lint sifferman::nes_controller_interface
+    <<: *default
+    description: Simulate the design
+    filesets_append:
+      - sim
+    toplevel: controller_interface_tb
+    default_tool: verilator
+    tools:
+      verilator:
+        mode: lint-only
+        verilator_options:
+          - --timing
+          - -Wall
+          - --language 1364-2005
+
+  synth_interface: # fusesoc run --target synth_interface sifferman::nes_controller_interface
+    <<: *default
+    description: Compute timing and utilization
+    toplevel: nes_controller_interface
+    default_tool: icestorm
+    tools:
+      icestorm:
+        pnr: next
+        # iCE40HX-8K CT256
+        nextpnr_options : [--hx8k, --package, ct256, --pcf-allow-unconstrained]
+
+  synth_controller: # fusesoc run --target synth_controller sifferman::nes_controller_interface
+    <<: *default
+    description: Compute timing and utilization
+    toplevel: nes_controller
+    default_tool: icestorm
+    tools:
+      icestorm:
+        pnr: next
+        # iCE40HX-8K CT256
+        nextpnr_options : [--hx8k, --package, ct256, --pcf-allow-unconstrained]
