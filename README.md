@@ -14,7 +14,7 @@
 | `nes_controller_interface#4` | 36 SB_LUT4 / 69 SB_DFF |
 |             `nes_controller` |  8 SB_LUT4 / 8 SB_DFF  |
 
-![Demonstration](docs/demonstration.png)
+![Demonstration](./docs/demonstration.png)
 
 ## Notes
 
@@ -28,8 +28,8 @@
 To download the RTL using `curl`:
 
 ```bash
-curl -LJO https://raw.githubusercontent.com/sifferman/nes_controller_interface/main/rtl/rtl/nes_controller_interface.v
-curl -LJO https://raw.githubusercontent.com/sifferman/nes_controller_interface/main/rtl/rtl/nes_controller.v
+curl -LJO https://raw.githubusercontent.com/sifferman/nes_controller_interface/main/rtl/nes_controller_interface.v
+curl -LJO https://raw.githubusercontent.com/sifferman/nes_controller_interface/main/rtl/nes_controller.v
 ```
 
 To add this repo as a FuseSoC library:
