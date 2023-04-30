@@ -117,7 +117,7 @@ module nes_controller_interface #(
     end
 
     `ifdef SIM
-    wire serial_n = serial_LIST_ni[controller_GEN-1];
+    wire serial_n = controller_serial_LIST_ni[controller_GEN-1];
     wire [7:0] data = data_q;
     `endif
 

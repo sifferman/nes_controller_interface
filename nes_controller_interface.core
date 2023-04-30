@@ -33,6 +33,7 @@ targets:
         iverilog_options:
           - -g2005
           - -Wall
+          - -DSIM=1
       verilator:
         verilator_options:
           - --binary
@@ -41,6 +42,7 @@ targets:
           - --x-assign unique
           - --x-initial unique
           - -Wno-fatal
+          - -DSIM=1
         run_options:
           - +verilator+rand+reset+2
 
