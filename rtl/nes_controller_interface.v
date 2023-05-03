@@ -24,11 +24,11 @@ module nes_controller_interface #(
 
     reg [1:0]   state_d, state_q = WAIT;
     reg         latch_d, latch_q = 0;
-    reg [3:0]   num_bits_left_d, num_bits_left_q = '0;
+    reg [3:0]   num_bits_left_d, num_bits_left_q = 0;
 
-    reg [$clog2(LATCH_PULSE_WIDTH)-1:0] latch_timer_d, latch_timer_q = '0;
+    reg [$clog2(LATCH_PULSE_WIDTH)-1:0] latch_timer_d, latch_timer_q = 0;
 
-    wire has_bits_left = (num_bits_left_q != '0);
+    wire has_bits_left = (num_bits_left_q != 0);
     assign valid_o = (state_q == WAIT);
     assign controller_latch_o = latch_q;
     assign controller_clk_o = clk && (has_bits_left || controller_latch_o);
@@ -71,10 +71,10 @@ module nes_controller_interface #(
 
     always @(posedge clk) begin
         if ( rst ) begin
-            num_bits_left_q <= '0;
-            latch_q <= '0;
+            num_bits_left_q <= 0;
+            latch_q <= 0;
             state_q <= WAIT;
-            latch_timer_q <= '0;
+            latch_timer_q <= 0;
         end else begin
             num_bits_left_q <= num_bits_left_d;
             latch_q <= latch_d;
@@ -90,17 +90,17 @@ module nes_controller_interface #(
     genvar controller_GEN;
     generate for (controller_GEN = 1; controller_GEN <= NUM_CONTROLLERS; controller_GEN = controller_GEN+1 ) begin : controller
 
-    reg [7:0] data_d, data_q = '0;
+    reg [7:0] data_d, data_q = 0;
     assign data_LIST_o[8*(controller_GEN-1)+:8] = data_q;
 
-    reg [7:0] shift_register_d, shift_register_q = '0;
+    reg [7:0] shift_register_d, shift_register_q = 0;
 
     always @* begin
         shift_register_d = shift_register_q;
         data_d = data_q;
-        if ( num_bits_left_q != '0 ) begin
+        if ( num_bits_left_q != 0 ) begin
             shift_register_d = {shift_register_q[6:0], ~controller_serial_LIST_ni[controller_GEN-1]};
-            if ( num_bits_left_d == '0 ) begin
+            if ( num_bits_left_d == 0 ) begin
                 data_d = shift_register_d;
             end
         end
@@ -108,8 +108,8 @@ module nes_controller_interface #(
 
     always @(posedge clk) begin
         if ( rst ) begin
-            shift_register_q <= '0;
-            data_q <= '0;
+            shift_register_q <= 0;
+            data_q <= 0;
         end else begin
             shift_register_q <= shift_register_d;
             data_q <= data_d;
