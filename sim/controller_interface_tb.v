@@ -24,7 +24,7 @@ wire [7:0] controller_4_data;
 
 nes_controller_interface #(
     .NUM_CONTROLLERS(4),
-    .LATCH_PULSE_WIDTH(2)
+    .LATCH_PULSE_WIDTH(1)
 ) controller_interface (
     .clk(clk),
     .rst(rst),
@@ -94,7 +94,7 @@ $display( "Begin simulation." );
 end
 
 rst = 1;
-@(negedge clk);
+@(posedge clk);
 rst = 0;
 
 for (integer i = 0; i < 256; i=i+1) begin
@@ -103,10 +103,10 @@ for (integer i = 0; i < 256; i=i+1) begin
     controller_3_buttons = i[7:0];
     controller_4_buttons = i[7:0];
     start_fetch = 1;
-    @(negedge clk);
+    @(posedge controller_latch);
     start_fetch = 0;
     @(posedge valid);
-    @(negedge clk);
+    @(posedge clk);
     `ASSERT_EQUAL(controller_1_buttons, controller_1_data);
     `ASSERT_EQUAL(controller_2_buttons, controller_2_data);
     `ASSERT_EQUAL(controller_3_buttons, controller_3_data);

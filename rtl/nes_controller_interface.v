@@ -29,7 +29,7 @@ module nes_controller_interface #(
     reg [$clog2(LATCH_PULSE_WIDTH)-1:0] latch_timer_d, latch_timer_q = 0;
 
     wire has_bits_left = (num_bits_left_q != 0);
-    assign valid_o = (state_q == WAIT);
+    assign valid_o = ( !has_bits_left ) && ( !latch_q );
     assign controller_latch_o = latch_q;
     assign controller_clk_o = clk && (has_bits_left || controller_latch_o);
 
@@ -61,6 +61,13 @@ module nes_controller_interface #(
             READ: begin
                 if ( has_bits_left ) begin
                     num_bits_left_d = num_bits_left_q - 1;
+                end else if ( start_fetch_i ) begin
+                    latch_d = 1;
+                    state_d = LATCH;
+                    /* verilator lint_save */
+                    /* verilator lint_off WIDTH */
+                    latch_timer_d = LATCH_PULSE_WIDTH-1;
+                    /* verilator lint_restore */
                 end else begin
                     state_d = WAIT;
                 end

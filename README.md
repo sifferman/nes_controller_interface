@@ -10,8 +10,8 @@
 
 | Module                       | Icestorm               |
 |------------------------------|------------------------|
-| `nes_controller_interface#1` | 34 SB_LUT4 / 24 SB_DFF |
-| `nes_controller_interface#4` | 36 SB_LUT4 / 69 SB_DFF |
+| `nes_controller_interface#1` | 35 SB_LUT4 / 24 SB_DFF |
+| `nes_controller_interface#4` | 38 SB_LUT4 / 69 SB_DFF |
 |             `nes_controller` |  8 SB_LUT4 / 8 SB_DFF  |
 
 ![Demonstration](./docs/demonstration.png)
