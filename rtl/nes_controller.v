@@ -15,7 +15,7 @@ module nes_controller #(
 
     // The NES controller's CD4021BC shift register allows for async loads
     // This module implements async loads, but uses sync loads by default due to poor support
-    generate if (SYNC_LATCH==0) begin
+    generate if (SYNC_LATCH==0) begin : async_latch
 
         assign shift_register_d = {shift_register_q[6:0], 1'b0};
 
@@ -27,7 +27,7 @@ module nes_controller #(
             end
         end
 
-    end else begin
+    end else begin : sync_latch
 
         assign shift_register_d = latch_i ? buttons_ni : {shift_register_q[6:0], 1'b0};
 
