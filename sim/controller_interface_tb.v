@@ -13,10 +13,10 @@ reg [7:0] controller_1_buttons = 0;
 reg [7:0] controller_2_buttons = 0;
 reg [7:0] controller_3_buttons = 0;
 reg [7:0] controller_4_buttons = 0;
-wire controller_1_serial;
-wire controller_2_serial;
-wire controller_3_serial;
-wire controller_4_serial;
+wire controller_1_serial_n;
+wire controller_2_serial_n;
+wire controller_3_serial_n;
+wire controller_4_serial_n;
 wire [7:0] controller_1_data;
 wire [7:0] controller_2_data;
 wire [7:0] controller_3_data;
@@ -34,10 +34,10 @@ nes_controller_interface #(
     .controller_clk_o(controller_clk),
     .controller_latch_o(controller_latch),
     .controller_serial_LIST_ni({
-        controller_1_serial,
-        controller_2_serial,
-        controller_3_serial,
-        controller_4_serial
+        controller_1_serial_n,
+        controller_2_serial_n,
+        controller_3_serial_n,
+        controller_4_serial_n
     }),
     .data_LIST_o({
         controller_1_data,
@@ -53,7 +53,7 @@ nes_controller #(
     .buttons_ni(~controller_1_buttons),
     .clk_i(controller_clk),
     .latch_i(controller_latch),
-    .serial_no(controller_1_serial)
+    .serial_no(controller_1_serial_n)
 );
 
 nes_controller #(
@@ -62,7 +62,7 @@ nes_controller #(
     .buttons_ni(~controller_2_buttons),
     .clk_i(controller_clk),
     .latch_i(controller_latch),
-    .serial_no(controller_2_serial)
+    .serial_no(controller_2_serial_n)
 );
 
 nes_controller #(
@@ -71,7 +71,7 @@ nes_controller #(
     .buttons_ni(~controller_3_buttons),
     .clk_i(controller_clk),
     .latch_i(controller_latch),
-    .serial_no(controller_3_serial)
+    .serial_no(controller_3_serial_n)
 );
 
 nes_controller #(
@@ -80,7 +80,7 @@ nes_controller #(
     .buttons_ni(~controller_4_buttons),
     .clk_i(controller_clk),
     .latch_i(controller_latch),
-    .serial_no(controller_4_serial)
+    .serial_no(controller_4_serial_n)
 );
 
 initial begin
