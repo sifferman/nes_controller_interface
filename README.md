@@ -28,8 +28,17 @@
 To download the RTL using `curl`:
 
 ```bash
-curl -LJO https://raw.githubusercontent.com/sifferman/nes_controller_interface/main/rtl/nes_controller_interface.v
-curl -LJO https://raw.githubusercontent.com/sifferman/nes_controller_interface/main/rtl/nes_controller.v
+( echo '/*';
+  curl -sL https://raw.githubusercontent.com/sifferman/nes_controller_interface/main/LICENSE | sed 's/^/ * /';
+  echo ' */';
+  curl -sL https://raw.githubusercontent.com/sifferman/nes_controller_interface/main/rtl/nes_controller_interface.v;
+) > nes_controller_interface.v
+
+( echo '/*';
+  curl -sL https://raw.githubusercontent.com/sifferman/nes_controller_interface/main/LICENSE | sed 's/^/ * /';
+  echo ' */';
+  curl -sL https://raw.githubusercontent.com/sifferman/nes_controller_interface/main/rtl/nes_controller.v;
+) > nes_controller.v
 ```
 
 To add this repo as a FuseSoC library:
